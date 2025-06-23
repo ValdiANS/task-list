@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 
 use App\Enums\TaskPriority;
 use App\Enums\TaskStatus;
+use Illuminate\Http\Response;
 
 class Task
 {
@@ -16,7 +17,7 @@ class Task
         public TaskPriority $priority,
         public TaskStatus $status,
         public DateTime $created_at,
-        public DateTime $update_at,
+        public DateTime $updated_at,
     ) {}
 }
 
@@ -36,7 +37,7 @@ $tasks = [
         2,
         'Sell old stuff',
         'Task 2 description',
-        null,
+        'Task 2 long description',
         false,
         TaskPriority::MEDIUM,
         TaskStatus::TO_DO,
@@ -58,7 +59,7 @@ $tasks = [
         4,
         'Take dogs for a walk',
         'Task 4 description',
-        null,
+        'Task 4 long description',
         false,
         TaskPriority::LOW,
         TaskStatus::TO_DO,
@@ -68,17 +69,30 @@ $tasks = [
 ];
 
 Route::get('/', function () use ($tasks) {
+    return redirect()->route('tasks.index');
+});
+
+Route::get('/tasks', function () use ($tasks) {
     return view('index', [
         'name' => 'John Doe',
         'tasks' => $tasks
     ]);
 })->name('tasks.index');
 
-Route::get('/task/{id}', function ($id) {
-    return "{$id}";
-})->name('tasks.show');
+Route::get('/tasks/{id}', function ($id) use ($tasks) {
+    $task = collect($tasks)->firstWhere('id', $id);
+    // $task = collect($tasks)->first(function ($value) use ($id) {
+    //     return $value->id === (int)$id;
+    // });
 
-//
+    if (!$task) {
+        abort(Response::HTTP_NOT_FOUND);
+    }
+
+    return view('task-detail', [
+        'task' => $task,
+    ]);
+})->name('tasks.show');
 
 Route::get('/hello', function () {
     return 'Hello World!';
