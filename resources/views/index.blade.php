@@ -19,10 +19,10 @@
                     </p>
                 </div>
 
-                <button
+                <a href="/tasks/create"
                     class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-8 px-4 bg-[#f1f2f4] text-[#121416] text-sm font-medium leading-normal transition-all duration-200 hover:bg-[#e8eaed] active:scale-95">
                     <span class="truncate">New Task</span>
-                </button>
+                </a>
             </div>
             <div class="px-4 py-3 @container">
                 @if (count($tasks) === 0)
