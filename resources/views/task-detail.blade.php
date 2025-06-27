@@ -19,11 +19,11 @@
                 {{ $task->title }}
             </h2>
             <p class="px-4 mb-4">{{ $task->description }}</p>
-            <div class="flex max-w-[480px] flex-wrap items-end gap-4 px-4 py-3">
+            <div class="flex max-w-full flex-wrap items-end gap-4 px-4 py-3">
                 <label class="flex flex-col min-w-40 flex-1">
                     <p class="text-[#111418] text-base font-medium leading-normal pb-2">Description</p>
                     <textarea disabled
-                        class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#111418] focus:outline-0 focus:ring-0 border border-[#dbe0e6] bg-white focus:border-[#dbe0e6] min-h-36 placeholder:text-[#60758a] p-[15px] text-base font-normal leading-normal">{{ $task->long_description }}</textarea>
+                        class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#111418] focus:outline-0 focus:ring-0 border border-[#dbe0e6] bg-white focus:border-[#dbe0e6] field-sizing-content placeholder:text-[#60758a] p-[15px] text-base font-normal leading-normal">{{ $task->long_description }}</textarea>
                 </label>
             </div>
             <h3 class="text-[#111418] text-lg font-bold leading-tight tracking-[-0.015em] px-4 pb-2 pt-4">
