@@ -111,7 +111,7 @@
                 <!-- Desktop Navigation Links (hidden on mobile) -->
                 <div class="hidden lg:flex items-center gap-9">
                     <a class="text-[#121416] text-sm font-medium leading-normal hover:text-gray-600 transition-colors"
-                        href="#">Home</a>
+                        href="/">Home</a>
                     <a class="text-[#121416] text-sm font-medium leading-normal hover:text-gray-600 transition-colors"
                         href="#">Projects</a>
                     <a class="text-[#121416] text-sm font-medium leading-normal hover:text-gray-600 transition-colors"
@@ -121,7 +121,7 @@
                 <!-- Right Section -->
                 <div class="flex flex-1 justify-end gap-2 sm:gap-4 lg:gap-8">
                     <!-- Search Bar (hidden on small screens) -->
-                    <label class="hidden md:flex flex-col min-w-40 !h-10 max-w-64">
+                    <label class="hidden md:flex flex-col min-w-4 !h-10 max-w-64">
                         <div class="flex w-full flex-1 items-stretch rounded-xl h-full">
                             <div
                                 class="text-[#6a7681] flex border-none bg-[#f1f2f4] items-center justify-center pl-4 rounded-l-xl border-r-0">
@@ -212,7 +212,7 @@
                     <!-- Mobile Navigation Links -->
                     <nav class="space-y-1">
                         <a class="block text-[#121416] text-base font-medium leading-normal py-3 px-2 rounded-lg hover:bg-[#f1f2f4] transition-colors"
-                            href="#">Home</a>
+                            href="/">Home</a>
                         <a class="block text-[#121416] text-base font-medium leading-normal py-3 px-2 rounded-lg hover:bg-[#f1f2f4] transition-colors"
                             href="#">Projects</a>
                         <a class="block text-[#121416] text-base font-medium leading-normal py-3 px-2 rounded-lg hover:bg-[#f1f2f4] transition-colors"
