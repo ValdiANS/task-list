@@ -19,43 +19,69 @@
                     <p class="text-[#111418] text-base font-medium leading-normal pb-2">Title</p>
 
                     <input id="title" name="title" placeholder="e.g., Write a blog post"
-                        class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#111418] focus:outline-0 focus:ring-0 border border-[#dbe0e6] bg-white focus:border-[#dbe0e6] h-14 placeholder:text-[#60758a] p-[15px] text-base font-normal leading-normal"
-                        value="" />
+                        class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#111418] focus:outline-0 focus:ring-0 border bg-white focus:border-[#dbe0e6] h-14 placeholder:text-[#60758a] p-[15px] text-base font-normal leading-normal @error('title') border-red-400 @else border-[#dbe0e6] @enderror"
+                        value="{{ old('title') }}" />
+
+                    @error('title')
+                        <p class="text-red-400 text-base font-medium leading-normal pt-2">
+                            {{ $message }}
+                        </p>
+                    @enderror
                 </label>
             </div>
             <div class="flex max-w-[480px] flex-wrap items-end gap-4 px-4 py-3">
                 <label for="description" class="flex flex-col w-full flex-1">
                     <p class="text-[#111418] text-base font-medium leading-normal pb-2">Description</p>
+
                     <input id="description" name="description" placeholder="e.g., Writing a blog post"
-                        class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#111418] focus:outline-0 focus:ring-0 border border-[#dbe0e6] bg-white focus:border-[#dbe0e6] h-14 placeholder:text-[#60758a] p-[15px] text-base font-normal leading-normal"
-                        value="" />
+                        class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#111418] focus:outline-0 focus:ring-0 border bg-white focus:border-[#dbe0e6] h-14 placeholder:text-[#60758a] p-[15px] text-base font-normal leading-normal @error('description') border-red-400 @else border-[#dbe0e6] @enderror"
+                        value="{{ old('description') }}" />
+
+                    @error('description')
+                        <p class="text-red-400 text-base font-medium leading-normal pt-2">
+                            {{ $message }}
+                        </p>
+                    @enderror
             </div>
             <div class="flex max-w-[480px] flex-wrap items-end gap-4 px-4 py-3">
                 <label for="longDescription" class="flex flex-col w-full flex-1">
                     <p class="text-[#111418] text-base font-medium leading-normal pb-2">Long Description</p>
+
                     <textarea id="longDescription" name="longDescription" placeholder="Add a long description"
-                        class="form-input flex w-full min-w-0 flex-1 resize rounded-lg text-[#111418] focus:outline-0 focus:ring-0 border border-[#dbe0e6] bg-white focus:border-[#dbe0e6] min-h-36 placeholder:text-[#60758a] p-[15px] text-base font-normal leading-normal"></textarea>
+                        class="form-input flex w-full min-w-0 flex-1 resize rounded-lg text-[#111418] focus:outline-0 focus:ring-0 border border-[#dbe0e6] bg-white focus:border-[#dbe0e6] min-h-36 placeholder:text-[#60758a] p-[15px] text-base font-normal leading-normal @error('longDescription') border-red-400 @else border-[#dbe0e6] @enderror">{{ old('longDescription') }}</textarea>
+
+                    @error('longDescription')
+                        <p class="text-red-400 text-base font-medium leading-normal pt-2">
+                            {{ $message }}
+                        </p>
+                    @enderror
                 </label>
             </div>
             <div class="flex max-w-[480px] flex-wrap items-end gap-4 px-4 py-3">
                 <label for="status" class="flex flex-col w-full flex-1">
                     <p class="text-[#111418] text-base font-medium leading-normal pb-2">Status</p>
                     <select id="status" name="status"
-                        class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#111418] focus:outline-0 focus:ring-0 border border-[#dbe0e6] bg-white focus:border-[#dbe0e6] h-14 bg-[image:--select-button-svg] placeholder:text-[#60758a] p-[15px] text-base font-normal leading-normal">
-                        <option value="To Do">To Do</option>
-                        <option value="In Progress">In Progress</option>
-                        <option value="Completed">Completed</option>
+                        class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#111418] focus:outline-0 focus:ring-0 border bg-white focus:border-[#dbe0e6] h-14 bg-[image:--select-button-svg] placeholder:text-[#60758a] p-[15px] text-base font-normal leading-normal @error('status') border-red-400 @else border-[#dbe0e6] @enderror">
+                        <option value="To Do" @selected(old('status') === 'To Do')>To Do</option>
+                        <option value="In Progress" @selected(old('status') === 'In Progress')>In Progress</option>
+                        <option value="Completed" @selected(old('status') === 'Completed')>Completed</option>
                     </select>
+
+                    @error('status')
+                        <p class="text-red-400 text-base font-medium leading-normal pt-2">
+                            {{ $message }}
+                        </p>
+                    @enderror
                 </label>
             </div>
             <div class="flex max-w-[480px] flex-wrap items-end gap-4 px-4 py-3">
                 <label for="priority" class="flex flex-col w-full flex-1">
                     <p class="text-[#111418] text-base font-medium leading-normal pb-2">Priority</p>
                     <select id="priority" name="priority"
-                        class="flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#111418] focus:outline-0 focus:ring-0 border border-[#dbe0e6] bg-white focus:border-[#dbe0e6] h-14 placeholder:text-[#60758a] p-[15px] text-base font-normal leading-normal">
-                        <option value="Low">Low</option>
-                        <option value="Medium">Medium</option>
-                        <option value="High">High</option>
+                        class="flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#111418] focus:outline-0 focus:ring-0 border bg-white focus:border-[#dbe0e6] h-14 placeholder:text-[#60758a] p-[15px] text-base font-normal leading-normal @error('priority') border-red-400 @else border-[#dbe0e6] @enderror">
+                        <option value="Low" @selected(old('priority') === 'Low')>Low</option>
+                        <option value="Medium" @selected(old('priority') === 'Medium')>Medium</option>
+                        <option value="High" @selected(old('priority') === 'High')>High</option>
                     </select>
                 </label>
             </div>
@@ -63,7 +89,14 @@
                 <label for="completed" class="flex flex-col w-full flex-1">
                     <p class="text-custom-gray text-base font-medium leading-normal pb-2">Completed</p>
                     <input id="completed" name="completed" type="checkbox" id="newsletter" name="newsletter"
-                        class="w-[18px] h-[18px] accent-custom-gray cursor-pointer">
+                        class="w-[18px] h-[18px] accent-custom-gray cursor-pointer @error('completed') outline-red-400 @else outline-[#dbe0e6] @enderror"
+                        @checked(old('completed'))>
+
+                    @error('completed')
+                        <p class="text-red-400 text-base font-medium leading-normal pt-2">
+                            {{ $message }}
+                        </p>
+                    @enderror
                 </label>
             </div>
             <div>
