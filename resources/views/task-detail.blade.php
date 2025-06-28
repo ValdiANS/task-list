@@ -7,6 +7,28 @@
 @section('content')
     <div class="px-8 flex flex-1 justify-center py-5">
         <div class="layout-content-container flex flex-col w-[512px] max-w-[512px] py-5 max-w-[960px] flex-1">
+            @session('status')
+                <div
+                    class="max-w-md mx-auto bg-white rounded-lg shadow-lg border-l-4 border-green-500 p-4 mb-4 transform transition-all duration-300 hover:scale-105">
+                    <div class="flex items-center">
+                        <div class="flex-shrink-0">
+                            <i class="fas fa-check-circle text-green-500 text-xl"></i>
+                        </div>
+                        <div class="ml-3">
+                            <p class="text-sm font-medium text-gray-900">
+                                {{ $value }}
+                            </p>
+                        </div>
+                        <div class="ml-auto pl-3">
+                            <button class="text-gray-400 hover:text-gray-600 transition-colors duration-200 cursor-pointer"
+                                onclick="this.parentElement.parentElement.parentElement.style.display='none'">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            @endsession
+
             <div class="flex flex-wrap gap-2 p-4">
                 <a href="{{ route('tasks.index') }}"
                     class="text-[#60758a] text-base font-medium leading-normal hover:underline">
@@ -56,6 +78,13 @@
                         {{ $task->completed ? 'TRUE' : 'FALSE' }}
                     </p>
                 </div>
+            </div>
+
+            <div class="flex justify-end">
+                <a href="{{ route('tasks.edit-form', ['id' => $task->id]) }}"
+                    class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-[#0c7ff2] text-white text-sm font-bold leading-normal tracking-[0.015em]">
+                    <span class="truncate">Edit task</span>
+                </a>
             </div>
         </div>
     </div>
