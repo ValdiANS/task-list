@@ -6,7 +6,7 @@
 
 @section('content')
     <div class="w-full flex justify-center">
-        <form method="POST" action="{{ route('tasks.edit', ['id' => $task->id]) }}" class="w-full max-w-[960px]">
+        <form method="POST" action="{{ route('tasks.update', ['task' => $task->id]) }}" class="w-full max-w-[960px]">
             @csrf
             @method('put')
 
