@@ -80,8 +80,12 @@
                 </div>
             </div>
 
-            <div class="flex justify-end">
-                <a href="{{ route('tasks.edit-form', ['id' => $task->id]) }}"
+            <div class="flex gap-3 justify-end">
+                <a href="{{ route('tasks.delete-page', ['task' => $task->id]) }}"
+                    class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-red-500 text-white text-sm font-bold leading-normal tracking-[0.015em]">
+                    <span class="truncate">Delete task</span>
+                </a>
+                <a href="{{ route('tasks.edit', ['task' => $task->id]) }}"
                     class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-[#0c7ff2] text-white text-sm font-bold leading-normal tracking-[0.015em]">
                     <span class="truncate">Edit task</span>
                 </a>
