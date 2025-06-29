@@ -36,4 +36,16 @@ class Task extends Model
         'priority',
         'completed',
     ];
+
+    /**
+     * The attributes that aren't mass assignable.
+     *
+     * @var array<string>|bool
+     */
+    // protected $guarded = [];
+
+    // public function getRouteKeyName()
+    // {
+    //     return 'slug';
+    // }
 }
