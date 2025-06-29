@@ -2,6 +2,7 @@
 
 use App\Enums\TaskPriority;
 use App\Enums\TaskStatus;
+use App\Http\Requests\TaskRequest;
 use Illuminate\Support\Facades\Route;
 
 use App\Models\Task;
@@ -87,29 +88,30 @@ Route::get('/tasks', function () {
     ]);
 })->name('tasks.index');
 
-Route::post('/tasks', function (Request $request) {
+// Route::post('/tasks', function (Request $request) {
+Route::post('/tasks', function (TaskRequest $request) {
     // dd('We have reached the store route!');
     // dd($request->all());
 
-    $validationResult = $request->validate([
-        'title' => 'required|max:256',
-        'description' => 'required',
-        'longDescription' => 'required',
-        'priority' => [Rule::enum(TaskPriority::class)],
+    // $validationResult = $request->validate([
+    //     'title' => 'required|max:256',
+    //     'description' => 'required',
+    //     'longDescription' => 'required',
+    //     'priority' => [Rule::enum(TaskPriority::class)],
 
-        'status' => [
-            Rule::enum(TaskStatus::class),
-            function (string $attribute, mixed $value, Closure $fail) use ($request) {
-                if ($request->boolean('completed') && $value !== TaskStatus::COMPLETED->value) {
-                    $fail('Status must be COMPLETED when completed is true.');
-                }
-            }
-        ],
+    //     'status' => [
+    //         Rule::enum(TaskStatus::class),
+    //         function (string $attribute, mixed $value, Closure $fail) use ($request) {
+    //             if ($request->boolean('completed') && $value !== TaskStatus::COMPLETED->value) {
+    //                 $fail('Status must be COMPLETED when completed is true.');
+    //             }
+    //         }
+    //     ],
 
-        'completed' => [
-            'accepted_if:status,' . TaskStatus::COMPLETED->value,
-        ],
-    ]);
+    //     'completed' => [
+    //         'accepted_if:status,' . TaskStatus::COMPLETED->value,
+    //     ],
+    // ]);
 
     $newTask = Task::create([
         'title' => $request->title,
@@ -148,50 +150,55 @@ Route::get('/tasks/{id}', function ($id) {
     ]);
 })->name('tasks.show');
 
-Route::get('/tasks/{id}/edit', function ($id) {
-    $task = Task::findOrFail($id);
-
+// assuming the {task} is the primary key, if the callback function parameter called this way,
+// this will automatically inject the task into the $task variable, so didnt need to fetch it manually.
+// If the primary key doesnt exist in tht tasks table, it will return error 404 page.
+Route::get('/tasks/{task}/edit', function (Task $task) {
     return view('edit-task', [
         'task' => $task,
     ]);
-})->name('tasks.edit-form');
+})->name('tasks.edit');
 
-Route::put('/tasks/{id}', function (Request $request, $id) {
-    $validationResult = $request->validate([
-        'title' => 'required|max:256',
-        'description' => 'required',
-        'longDescription' => 'required',
-        'priority' => [Rule::enum(TaskPriority::class)],
+Route::put('/tasks/{task}', function (TaskRequest $request, Task $task) {
+    $data = $request->validated();
 
-        'status' => [
-            Rule::enum(TaskStatus::class),
-            function (string $attribute, mixed $value, Closure $fail) use ($request) {
-                if ($request->boolean('completed') && $value !== TaskStatus::COMPLETED->value) {
-                    $fail('Status must be COMPLETED when completed is true.');
-                }
-            }
-        ],
+    // $task->title = $request->title;
+    // $task->description = $request->description;
+    // $task->long_description = $request->longDescription;
+    // $task->priority = $request->priority;
+    // $task->status = $request->status;
+    // $task->completed = $request->boolean('completed');
 
-        'completed' => [
-            'accepted_if:status,' . TaskStatus::COMPLETED->value,
-        ],
+    // $task->save();
+
+    // $task->update($request->validated());
+    $task->update([
+        'title' => $request->safe()->title,
+        'description' => $request->safe()->description,
+        'long_description' => $request->safe()->longDescription,
+        'status' => $request->safe()->status,
+        'priority' => $request->safe()->priority,
+        'completed' => (bool) $request->safe()->completed,
     ]);
 
-    $editedTask = Task::find($id);
+    // $request->flash('status', "Successfully edit {$request->title} task!");
 
-    $editedTask->title = $request->title;
-    $editedTask->description = $request->description;
-    $editedTask->long_description = $request->longDescription;
-    $editedTask->priority = $request->priority;
-    $editedTask->status = $request->status;
-    $editedTask->completed = $request->boolean('completed');
+    return redirect()
+        ->route('tasks.show', ['id' => $task->id])
+        ->with('status', "Successfully edit {$request->title} task!");
+})->name('tasks.update');
 
-    $editedTask->save();
+Route::get('tasks/{task}/delete', function (Task $task) {
+    return view('delete-task', ['task' => $task]);
+})->name('tasks.delete-page');
 
-    $request->flash('status', "Successfully edit {$request->title} task!");
+Route::delete('tasks/{task}', function (Task $task) {
+    $task->delete();
 
-    return redirect()->route('tasks.show', ['id' => $editedTask->id]);
-})->name('tasks.edit');
+    return redirect()
+        ->route('tasks.index')
+        ->with('status', "Successfully delete {$task->title}!");
+})->name('tasks.destroy');
 
 
 Route::get('/hello', function () {
